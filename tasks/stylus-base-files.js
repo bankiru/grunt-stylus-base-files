@@ -86,7 +86,7 @@ module.exports = function (grunt) {
 				}
 
 				value = search[key];
-				filename = value.match(regex)[1];
+				filename = value.match(regex)[1] + '.styl';
 
 				if (options.paths.length > 0) {
 					// Traverse by paths
@@ -97,14 +97,14 @@ module.exports = function (grunt) {
 
 						item = options.paths[item];
 
-						fullfilename = path.resolve(path.join(item, filename + '.styl'));
+						fullfilename = path.resolve(path.join(item, filename));
 						if (grunt.file.exists(fullfilename)) {
 							addDep(fullfilename);
 						}
 					}
 				}
 				else {
-					addDep(filename);
+					addDep(path.resolve(filename));
 				}
 			}
 
@@ -134,6 +134,8 @@ module.exports = function (grunt) {
 		grunt.config(stylusFilesPath, _.groupBy(bases, function (base) {
 			return base.replace(/\.styl$/, '.css');
 		}));
+
+		grunt.log.debug('stylusFiles: ' + JSON.stringify(grunt.config(stylusFilesPath)));
 
 		grunt.log.ok('Found ' + bases.length + ' base stylus files');
 
