@@ -65,6 +65,8 @@ module.exports = function (grunt) {
 		var regexComments = new RegExp('(\\/\\*(.|\n)*?\\*\/|\/\/\\s*.*)', 'g');
 
 		fs.readFile(srcFile, function (err, data) {
+			bases.push(path.resolve(srcFile));
+			
 			data = String(data).replace(regexComments, '');
 
 			var search = data.match(regexGlob);
@@ -73,8 +75,6 @@ module.exports = function (grunt) {
 				callback(null);
 				return;
 			}
-
-			bases.push(path.resolve(srcFile));
 
 			var value,
 				filename,
