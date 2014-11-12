@@ -135,6 +135,8 @@ module.exports = function (grunt) {
 			return;
 		}
 
+		grunt.log.debug("base files: " + bases.join(', '));
+
 		grunt.config(stylusFilesPath, _.groupBy(bases, function (base) {
 			return base.replace(/\.styl$/, '.css');
 		}));
@@ -147,8 +149,6 @@ module.exports = function (grunt) {
 	};
 
 	var filterBases = function () {
-		grunt.log.debug("bases: " + bases.join(', '));
-		grunt.log.debug("deps: " + deps.join(', '));
 		bases = _.difference(bases, deps);
 	};
 };
