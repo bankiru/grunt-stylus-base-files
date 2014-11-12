@@ -66,6 +66,9 @@ module.exports = function (grunt) {
 
 		fs.readFile(srcFile, function (err, data) {
 			bases.push(path.resolve(srcFile));
+
+			var paths = options.paths;
+			paths.push(path.dirname(srcFile));
 			
 			data = String(data).replace(regexComments, '');
 
@@ -88,14 +91,14 @@ module.exports = function (grunt) {
 				value = search[key];
 				filename = value.match(regex)[1] + '.styl';
 
-				if (options.paths.length > 0) {
+				if (paths.length > 0) {
 					// Traverse by paths
-					for (var item in options.paths) {
-						if (!options.paths.hasOwnProperty(item)) {
+					for (var item in paths) {
+						if (!paths.hasOwnProperty(item)) {
 							continue;
 						}
 
-						item = options.paths[item];
+						item = paths[item];
 
 						fullfilename = path.resolve(path.join(item, filename));
 						if (grunt.file.exists(fullfilename)) {
@@ -128,6 +131,7 @@ module.exports = function (grunt) {
 		// Save results
 		if (_.isEmpty(deps)) {
 			grunt.log.ok('No base stylus files are found');
+			callback();
 			return;
 		}
 
@@ -143,6 +147,8 @@ module.exports = function (grunt) {
 	};
 
 	var filterBases = function () {
+		grunt.log.debug("bases: " + bases.join(', '));
+		grunt.log.debug("deps: " + deps.join(', '));
 		bases = _.difference(bases, deps);
 	};
 };
