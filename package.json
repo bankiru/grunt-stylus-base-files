@@ -1,7 +1,7 @@
 {
   "name": "grunt-stylus-base-files",
   "description": "Substitute base stylus files to stylus tasks",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "homepage": "https://github.com/bankiru/grunt-stylus-base-files",
   "author": {
     "name": "Boris Gorbylev",
@@ -38,6 +38,6 @@
   "bugs": {
     "url": "https://github.com/bankiru/grunt-stylus-base-files/issues"
   },
-  "_id": "grunt-stylus-base-files@0.1.5",
+  "_id": "grunt-stylus-base-files@0.1.6",
   "_from": "grunt-stylus-base-files@~0.1.0"
 }

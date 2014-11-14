@@ -13,6 +13,7 @@ module.exports = function (grunt) {
 	var fs = require('fs');
 	var _ = require('underscore');
 	var path = require('path');
+	var async = require('async');
 
 	// List of dependencies
 	var deps = [];
@@ -35,7 +36,7 @@ module.exports = function (grunt) {
 		var stylusFilesPath = options.stylus_task.concat('files');
 		options.paths = grunt.config(options.stylus_task.concat('options').concat('paths')) || [];
 
-		grunt.util.async.forEachSeries(this.files, function (file, next) {
+		async.eachSeries(this.files, function (file, next) {
 			var srcFile = Array.isArray(file.src) ? file.src[0] : file.src;
 
 			if (!grunt.file.exists(srcFile)) {
