@@ -69,7 +69,7 @@ module.exports = function (grunt) {
 
 			var paths = options.paths;
 			paths.push(path.dirname(srcFile));
-			
+
 			data = String(data).replace(regexComments, '');
 
 			var search = data.match(regexGlob);
@@ -79,37 +79,32 @@ module.exports = function (grunt) {
 				return;
 			}
 
-			var value,
-				filename,
-				fullfilename;
+			_.each(
+				search,
+				function (value) {
+					var filename = value.match(regex)[1] + '.styl';
+					var fullfilename;
 
-			for (var key in search) {
-				if (!search.hasOwnProperty(key)) {
-					continue;
-				}
+					if (paths.length > 0) {
+						// Traverse by paths
+						for (var item in paths) {
+							if (!paths.hasOwnProperty(item)) {
+								continue;
+							}
 
-				value = search[key];
-				filename = value.match(regex)[1] + '.styl';
+							item = paths[item];
 
-				if (paths.length > 0) {
-					// Traverse by paths
-					for (var item in paths) {
-						if (!paths.hasOwnProperty(item)) {
-							continue;
-						}
-
-						item = paths[item];
-
-						fullfilename = path.resolve(path.join(item, filename));
-						if (grunt.file.exists(fullfilename)) {
-							addDep(fullfilename);
+							fullfilename = path.resolve(path.join(item, filename));
+							if (grunt.file.exists(fullfilename)) {
+								addDep(fullfilename);
+							}
 						}
 					}
+					else {
+						addDep(path.resolve(filename));
+					}
 				}
-				else {
-					addDep(path.resolve(filename));
-				}
-			}
+			);
 
 			callback();
 		});
@@ -135,7 +130,9 @@ module.exports = function (grunt) {
 			return;
 		}
 
-		grunt.log.debug("base files: " + bases.join(', '));
+		_.each(bases, function(base) {
+			grunt.log.writeln('File ' + base.cyan + ' recognized as base Stylus file.');
+		});
 
 		grunt.config(stylusFilesPath, _.groupBy(bases, function (base) {
 			return base.replace(/\.styl$/, '.css');
@@ -143,7 +140,7 @@ module.exports = function (grunt) {
 
 		grunt.log.debug('stylusFiles: ' + JSON.stringify(grunt.config(stylusFilesPath)));
 
-		grunt.log.ok('Found ' + bases.length + ' base stylus files');
+		grunt.log.ok('Found ' + bases.length.toString().cyan + ' base stylus files');
 
 		callback();
 	};
