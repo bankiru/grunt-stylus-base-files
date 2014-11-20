@@ -25,12 +25,22 @@ In your project's Gruntfile, add a section named `stylusbasefiles` to the data o
 ```js
 grunt.initConfig({
   stylusbasefiles: {
-    your_target: {
+    development: {
       options: {
-          stylus_task: ['stylus', 'development']
+        paths: []
       },
-
-      files: '<%= stylus.development.files %>'
+      files: {
+        src: '**/*.styl'
+      }
+    },
+  },
+  stylus: {
+    development: {
+      files: [{
+        expand: true,
+        src: '<%= stylusbasefiles.development.dest %>',
+        ext: '.css'
+      }]
     },
   },
 })
@@ -38,5 +48,5 @@ grunt.initConfig({
 Then you should add task `stylusbasefiles` into task chain before `stylus` task. For example:
 
 ```js
-grunt.registerTask('default', ['stylusbasefiles:your_target', 'stylus:development']);
+grunt.registerTask('default', ['stylusbasefiles:development', 'stylus:development']);
 ```

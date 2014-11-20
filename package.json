@@ -1,7 +1,7 @@
 {
   "name": "grunt-stylus-base-files",
   "description": "Substitute base stylus files to stylus tasks",
-  "version": "0.1.6",
+  "version": "0.2.0",
   "homepage": "https://github.com/bankiru/grunt-stylus-base-files",
   "author": {
     "name": "Boris Gorbylev",
@@ -16,10 +16,10 @@
     "node": ">= 0.8.0"
   },
   "devDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.5"
   },
   "peerDependencies": {
-    "grunt": "~0.4.1"
+    "grunt": "~0.4.5"
   },
   "keywords": [
     "gruntplugin",
@@ -30,14 +30,9 @@
     "dependency",
     "basefiles"
   ],
-  "dependencies": {
-    "underscore": "~1.4.4"
-  },
-  "readme": "# grunt-stylus-base-files\n\n> stylus-base-files is a node module for substituting list of base Stylus files to stylus tasks. Used mostly for grunt-contrib-stylus.\n\n## Getting Started\nThis plugin requires Grunt `~0.4.1`\n\nIf you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:\n\n```shell\nnpm install grunt-stylus-base-files --save-dev\n```\n\nOnce the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:\n\n```js\ngrunt.loadNpmTasks('grunt-stylus-base-files');\n```\n\n## The \"stylusbasefiles\" task\n\n### Overview\nIn your project's Gruntfile, add a section named `stylusbasefiles` to the data object passed into `grunt.initConfig()`.\n\n```js\ngrunt.initConfig({\n  stylusbasefiles: {\n    your_target: {\n      options: {\n          stylus_task: ['stylus', 'development']\n      },\n\n      files: '<%= stylus.development.files %>'\n    },\n  },\n})\n```\nThen you should add task `stylusbasefiles` into task chain before `stylus` task. For example:\n\n```js\ngrunt.registerTask('default', ['stylusbasefiles:your_target', 'stylus:development']);\n```\n",
+  "readme": "# grunt-stylus-base-files\n\n> stylus-base-files is a node module for substituting list of base Stylus files to stylus tasks. Used mostly for grunt-contrib-stylus.\n\n## Getting Started\nThis plugin requires Grunt `~0.4.1`\n\nIf you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:\n\n```shell\nnpm install grunt-stylus-base-files --save-dev\n```\n\nOnce the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:\n\n```js\ngrunt.loadNpmTasks('grunt-stylus-base-files');\n```\n\n## The \"stylusbasefiles\" task\n\n### Overview\nIn your project's Gruntfile, add a section named `stylusbasefiles` to the data object passed into `grunt.initConfig()`.\n\n```js\ngrunt.initConfig({\n  stylusbasefiles: {\n    development: {\n      options: {\n        paths: []\n      },\n      files: {\n        src: '**/*.styl'\n      }\n    },\n  },\n  stylus: {\n    development: {\n      files: [{\n        expand: true,\n        src: '<%= stylusbasefiles.development.dest %>',\n        ext: '.css'\n      }]\n    },\n  },\n})\n```\nThen you should add task `stylusbasefiles` into task chain before `stylus` task. For example:\n\n```js\ngrunt.registerTask('default', ['stylusbasefiles:development', 'stylus:development']);\n```",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/bankiru/grunt-stylus-base-files/issues"
-  },
-  "_id": "grunt-stylus-base-files@0.1.6",
-  "_from": "grunt-stylus-base-files@~0.1.0"
+  }
 }
